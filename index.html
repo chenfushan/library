@@ -12,14 +12,15 @@
 		</header>
 		<div id="body">
 			<div id="search">
-				<form action="">
-					<input id="bookName" type="text">
-					<input id="bookSearch" type="button" value="Search">
+				<form action="bookList.php" method="post">
+					<input id="bookName" type="text" name="bookName" placeholder="Book Name" required>
+					<input id="bookSearch" type="submit" value="Search">
 				</form>
 			</div>
 			<div id="function">
-				<a href="">Return Books</a>
-				<a href="">Check personal library</a>
+				<a href="returnBook.html">Return Books</a>
+				<a href="userDetail.php">Check personal library</a>
+				<a href="borrowBook.html">Borrow Books</a>
 			</div>
 		</div>
 	</div>

@@ -7,8 +7,6 @@
 		
 		function __construct()
 		{
-			$mySql = new mySQL();
-			$db = $mySql->dbConnect();
 		}
 		public function register($name, $company, $address)
 		{
@@ -17,7 +15,7 @@
 			$name = addslashes($name);
 			$company = addslashes($company);
 			$address = addslashes($address);
-			$result = $db->query("insert into user values('','".$name."','".$company."','".$address."','');");
+			$result = $db->query("insert into user(UserID, UserName, UserCompany, UserAddress, BorrowNum) values('','".$name."','".$company."','".$address."','');");
 			if (!$result) {
 				echo "false";
 			} else {
@@ -26,21 +24,83 @@
 			}
 			
 		}
-		public function userCheck($num)
+		public function userCheck($UserID)
 		{
-			
+			$mySql = new MySQL();
+			$db = $mySql->dbConnect();
+			$result = $db->query("select * from user where UserID = '".$UserID."';");
+			if (!$result || $result->num_rows == 0) {
+				return false;
+			}else{
+				$result = $mySql->resultToArray($result);
+				return $result;
+			}
 		}
 		public function bookSelect($bookName)
 		{
-			
+			$mySql = new MySQL();
+			$db = $mySql->dbConnect();
+			$bookName = addslashes($bookName);
+			$result = $db->query("select * from book where BookName like '%".$bookName."%';");
+			if (!$result || $result->num_rows == 0) {
+				return false;
+			}else{
+				$result = $mySql->resultToArray($result);
+				return $result;
+			}
 		}
 		public function returnBook($returnOrder)
 		{
-			
+			$UserID = $returnOrder->UserID;
+			$BookID = $returnOrder->BookID;
+			$mySql = new MySQL();
+			$db = $mySql->dbConnect();
+			$query = "select datediff(current_date(), BorrowDate) from borrow where UserID= '".$UserID."' and BookID = '".$BookID."';";
+			$result = $db->query($query);
+			if (!$result) {
+				echo "falseA";
+				return false;
+			}
+			if ($result->num_rows == 0) {
+				echo "falseB";
+				return false;
+			}
+			$result = $mySql->resultToArray($result);
+			foreach ($result as $row) {
+				echo $row['datediff(current_date(), BorrowDate)'];
+			}
+			$result = $db->query("delete from borrow where UserID='".$UserID."' and BookID = '".$BookID."';");
+			$result = $db->query("update user set BorrowNum = BorrowNum-1 where UserID='".$UserID."';");
+			$result = $db->query("update book set BookLeft = BookLeft+1 where BookID='".$BookID."';");
+
 		}
 		public function borrowBook($borrowOrder)
 		{
-			
+			$UserID = $borrowOrder->UserID;
+			$BookID = $borrowOrder->BookID;
+			$mySql = new MySQL();
+			$db = $mySql->dbConnect();
+			$query = "select UserID from user where UserID='".$UserID."';";
+			$result = $db->query($query);
+			if (!$result) {
+				echo "falseA";
+				return false;
+			}
+			if ($result->num_rows == 0) {
+				echo "falseB";
+				return false;
+			}
+			$query = "insert into borrow(UserID, BookID, BorrowDate) values('".$UserID."','".$BookID."',current_date());";
+			$result = $db->query($query);
+			$result = $db->query("update user set BorrowNum = BorrowNum+1 where UserID='".$UserID."';");
+			$result = $db->query("update book set BookLeft = BookLeft-1 where BookID='".$BookID."';");
+			if (!$result) {
+				echo "falseA";
+				return false;
+			}else{
+				echo "true";
+			}
+
 		}
 	}
 
@@ -99,20 +159,10 @@
 				echo "falseB";
 				return false;
 			}
-			// $query = "select BookNum from book where BookID= '".$BookID."' and BookLeft > ".$number.";";
-			// $result = $db->query($query);
-			// if (!$result) {
-			// 	echo "falseA";
-			// 	return false;
-			// }
-			// if ($result->num_rows == 0) {
-			// 	echo "falseC";
-			// 	return false;
-			// }
 			$result = $mySql->resultToArray($result);
 			foreach ($result as $row) {
 				if ($row['BookNum'] > $number && $row['BookLeft'] > $number) {
-					$query = "update book set BookNum = BookNum-".$number." and BookLeft = BookLeft-".$number." where BookID = '".$BookID."';";
+					$query = "update book set BookNum = BookNum-".$number.", BookLeft = BookLeft-".$number." where BookID = '".$BookID."';";
 					$result = $db->query($query);
 					if (!$result) {
 						echo "falseA";
@@ -171,12 +221,12 @@
 	*/
 	class returnBookOrder
 	{
-		public $num = 0;
-		public $bookNum = 0;
-		function __construct($num, $bookNum)
+		public $UserID = 0;
+		public $BookID = 0;
+		function __construct($UserID, $BookID)
 		{
-			$this->num = $num;
-			$this->bookNum = $bookNum;
+			$this->UserID = $UserID;
+			$this->BookID = $BookID;
 		}
 	}
 
@@ -185,12 +235,12 @@
 	*/
 	class borrowBookOrder
 	{
-		public $num = 0;
-		public $bookNum = 0;
-		function __construct($num, $bookNum)
+		public $UserID = 0;
+		public $BookID = 0;
+		function __construct($UserID, $BookID)
 		{
-			$this->num = $num;
-			$this->bookNum = $bookNum;
+			$this->UserID = $UserID;
+			$this->BookID = $BookID;
 		}
 	}
 

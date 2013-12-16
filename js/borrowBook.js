@@ -1,13 +1,7 @@
 $(document).ready(function() {
-	$('#cancelButton').click(function() {
-		var catalog = $('#catalog').val();
-		var number = $('#number').val();
-
-		var r = confirm("Are you sure?");
-		if (r == true) {
-		}else{
-			return;
-		}
+	$('#borrowButton').click(function() {
+		var userid = $('#userid').val();
+		var bookid = $('#bookid').val();
 
 		var xmlhttp;
 		if (window.XMLHttpRequest) {
@@ -15,31 +9,23 @@ $(document).ready(function() {
 		} else{
 			xmlhttp = new AcitiveXObject("Microsoft.XMLHTTP");
 		}
-		var url = "catalog="+catalog+"&number="+number;
+		var url = "userid="+userid+"&bookid="+bookid;
 //		alert(url);
-		xmlhttp.open("POST","./php/cancellationBookResult.php",true);
+		xmlhttp.open("POST","./php/borrowBookResult.php",true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 				var Info = xmlhttp.responseText;
 				if (Info == "true") {
-					alert("Successfully!");
-					document.forms[0].reset();
-				} else{
+					alert("Borrow Successfully!");
+					location.href ="index.html";
+				}else{
 					if (Info == "falseA") {
 						alert("Database Error!");
 						return;
 					}
 					if (Info == "falseB") {
-						alert("There is no this book!");
-						return;
-					}
-					if (Info == "falseC") {
-						alert("Please return the book first!");
-						return;
-					}
-					if (Info == "falseD") {
-						alert("There is no enough book in library!");
+						alert("You don't have a User ID\nPlease register first");
 						return;
 					}else{
 						alert(Info);
