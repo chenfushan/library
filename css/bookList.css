@@ -1,0 +1,62 @@
+body{
+	margin-top: 100px;
+}
+div#page{
+	width: 600px;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: rgb(200,200,169);
+	padding-bottom: 100px;
+	border-radius: 15px;
+}
+div#body{
+	width: 500px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 30px;
+}
+header{
+	height: 30px;
+	margin-left: 15px;
+}
+div#search{
+	height: 50px;
+	width: 300px;
+	margin-right: auto;
+	margin-left: auto;
+}
+input{
+	line-height: 14px;
+	margin: 8px 0;
+	padding: 6px 15px;
+	border: 0;
+	border-radius: 5px;
+}
+input[type=submit],
+input[type=button]{
+	background-color: rgb(249,205,173);
+}
+ul#title{
+	height: 25px;
+	list-style: none;
+	-webkit-padding-start: 0;
+	color: #000080;
+}
+ul#detail{
+	height: 40px;
+	list-style: none;
+	-webkit-padding-start: 0;
+}
+li{
+	width: 80px;
+	margin-bottom: 5px;
+	float: left;
+	text-align: center;
+}
+li.left{
+	width: 50px;
+}
+li.bookName{
+	width: 120px;
+	color: #000080;
+}

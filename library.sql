@@ -40,6 +40,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
+INSERT INTO `book` VALUES (1000,'Operate System','Andrew',79.9,8,7,'2013-12-15'),(1001,'The beauty of program','MS',36.5,8,8,'2013-12-15');
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,6 +54,7 @@ DROP TABLE IF EXISTS `borrow`;
 CREATE TABLE `borrow` (
   `UserID` int(11) NOT NULL,
   `BookID` int(11) NOT NULL,
+  `BorrowDate` date NOT NULL,
   PRIMARY KEY (`UserID`,`BookID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -63,6 +65,7 @@ CREATE TABLE `borrow` (
 
 LOCK TABLES `borrow` WRITE;
 /*!40000 ALTER TABLE `borrow` DISABLE KEYS */;
+INSERT INTO `borrow` VALUES (10000,1000,'2013-10-16');
 /*!40000 ALTER TABLE `borrow` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,9 +81,10 @@ CREATE TABLE `user` (
   `UserName` varchar(40) NOT NULL,
   `UserCompany` varchar(100) NOT NULL,
   `UserAddress` varchar(100) NOT NULL,
-  `BorrowNum` int(11) NOT NULL,
+  `BorrowNum` int(11) NOT NULL DEFAULT '0',
+  `UserLevel` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10003 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -89,6 +93,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (10000,'yangfan','XiDian','HaiTang #8',1,1),(10001,'chen','XiDian','HaiTang',0,1),(10002,'alps','XiDian','HaiTang',0,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -101,4 +106,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-14  1:59:55
+-- Dump completed on 2013-12-16 18:00:01

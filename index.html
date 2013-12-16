@@ -3,14 +3,14 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Book Management</title>
+	<link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
 	<div id="page">
-		<header>
-			<a href="adminMenu.html">Administrator Menu</a>
-			<a href="register.html">Register</a>
-		</header>
 		<div id="body">
+			<header>
+				<a href="adminMenu.html">Administrator Menu</a>
+			</header>
 			<div id="search">
 				<form action="bookList.php" method="post">
 					<input id="bookName" type="text" name="bookName" placeholder="Book Name" required>
@@ -18,9 +18,12 @@
 				</form>
 			</div>
 			<div id="function">
-				<a href="returnBook.html">Return Books</a>
-				<a href="userDetail.php">Check personal library</a>
-				<a href="borrowBook.html">Borrow Books</a>
+				<ul>
+					<li><a href="userDetail.php">Personal library</a></li>
+					<li><a href="returnBook.html">Return Books</a></li>
+					<li><a href="borrowBook.html">Borrow Books</a></li>
+					<li><a href="register.html">Register</a></li>
+				</ul>				
 			</div>
 		</div>
 	</div>

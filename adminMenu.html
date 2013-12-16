@@ -3,22 +3,30 @@
 <head>
 	<meta charset="UTF-8">
 	<title>administrator</title>
+	<link rel="stylesheet" href="./css/pageStyle.css">
+	<link rel="stylesheet" href="./css/index.css">
 </head>
 <body>
 	<div id="page">
-		<header>
-			<a href="index.html">User Menu</a>
-		</header>
 		<div id="body">
+			<header>
+			<a href="index.html">User Menu</a>
+			</header>
 			<div id="search">
 				<form action="userDetail" method="post">
-					<input type="text" id="UserID" name="UserID">
+					<input type="text" id="UserID" name="UserID" placeholder="User ID" required>
 					<input type="submit" id="userSearch" value="Search">
+				</form>
+				<form action="bookList.php" method="post">
+					<input id="bookName" type="text" name="bookName" placeholder="Book Name" required>
+					<input id="bookSearch" type="submit" value="Search">
 				</form>
 			</div>
 			<div id="function">
-				<a href="addBook.html" target="_blank">Add books</a>
-				<a href="cancellationBook.html" target="_blank">Cancellation books</a>
+				<ul>
+					<li><a href="addBook.html" target="_blank">Add books</a></li>
+					<li><a href="cancellationBook.html" target="_blank">Cancellation books</a></li>
+				</ul>	
 			</div>
 		</div>
 	</div>
