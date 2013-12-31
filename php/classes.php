@@ -80,7 +80,7 @@
 			$BookID = $borrowOrder->BookID;
 			$mySql = new MySQL();
 			$db = $mySql->dbConnect();
-			$query = "select UserID from user where UserID='".$UserID."';";
+			$query = "select UserID,BorrowNum from user where UserID='".$UserID."';";
 			$result = $db->query($query);
 			if (!$result) {
 				echo "falseA";
@@ -90,8 +90,36 @@
 				echo "falseB";
 				return false;
 			}
+			$result = $mySql->resultToArray($result);
+			foreach ($result as $row) {
+				if ($row['BorrowNum'] >= 5) {
+					echo "falseD";
+					return false;
+				}
+			}
+			$query = "select BookLeft from book where BookID = '".$BookID."';";
+			$result = $db->query($query);
+			if (!$result) {
+				echo "falseA";
+				return false;
+			}
+			if ($result->num_rows == 0) {
+				echo "falseE";
+				return false;
+			}
+			$result = $mySql->resultToArray($result);
+			foreach ($result as $row) {
+				if ($row['BookLeft'] <= 0) {
+					echo "falseF";
+					return false;
+				}
+			}
 			$query = "insert into borrow(UserID, BookID, BorrowDate) values('".$UserID."','".$BookID."',current_date());";
 			$result = $db->query($query);
+			if (!$result) {
+				echo "falseC";
+				return false;
+			}
 			$result = $db->query("update user set BorrowNum = BorrowNum+1 where UserID='".$UserID."';");
 			$result = $db->query("update book set BookLeft = BookLeft-1 where BookID='".$BookID."';");
 			if (!$result) {
@@ -173,7 +201,7 @@
 					}
 
 				}else{
-					if ($row['BookLeft'] < $number && $row['BookNum'] > $number) {
+					if ($row['BookLeft'] < $number && $row['BookNum'] >= $number) {
 						echo "falseC";
 						return false;
 					}else{

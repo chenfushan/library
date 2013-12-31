@@ -25,9 +25,25 @@ $(document).ready(function() {
 						return;
 					}
 					if (Info == "falseB") {
-						alert("You don't have a User ID\nPlease register first");
+						alert("Wrong User ID\nPlease register first");
 						return;
-					}else{
+					}if (Info == "falseC") {
+						alert("You have already borrowed this book!");
+						return;
+					}
+					if (Info == "falseD") {
+						alert("You have already borrowed 5 books !")
+						return;
+					}
+					if (Info == "falseE") {
+						alert("Library don't have this book");
+						return;
+					}
+					if (Info == "falseF") {
+						alert("This book all have been borrowed");
+						return;
+					}
+					else{
 						alert(Info);
 					}
 				}
