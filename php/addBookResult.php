@@ -9,5 +9,6 @@
 
 	$book = new book($catalog, $title, $author, $price);
 	$library = new library();
+	//add book to library
 	$library->addBooks($book, $number);
  ?>

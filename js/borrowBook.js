@@ -1,20 +1,27 @@
 $(document).ready(function() {
 	$('#borrowButton').click(function() {
+		/*
+		* get element value by id
+		*/
 		var userid = $('#userid').val();
 		var bookid = $('#bookid').val();
 
+		//create ajax
 		var xmlhttp;
 		if (window.XMLHttpRequest) {
+			//new xmlhttp
 			xmlhttp = new XMLHttpRequest();
 		} else{
-			xmlhttp = new AcitiveXObject("Microsoft.XMLHTTP");
+			xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
 		}
 		var url = "userid="+userid+"&bookid="+bookid;
 //		alert(url);
+		//use post method to send data to background
 		xmlhttp.open("POST","./php/borrowBookResult.php",true);
 		xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 		xmlhttp.onreadystatechange = function() {
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+				//get response message
 				var Info = xmlhttp.responseText;
 				if (Info == "true") {
 					alert("Borrow Successfully!");

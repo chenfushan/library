@@ -5,5 +5,6 @@
 	$address = $_POST['address'];
 
 	$user = new user();
+	//register new user
 	$user->register($name, $company, $address);
  ?>

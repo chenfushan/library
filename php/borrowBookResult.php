@@ -5,5 +5,6 @@
 
 	$borrowBookOrder = new borrowBookOrder($userid, $bookid);
 	$User = new User();
+	//borrow book from library
 	$User->borrowBook($borrowBookOrder);
  ?>
